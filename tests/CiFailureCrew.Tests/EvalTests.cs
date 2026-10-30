@@ -10,7 +10,7 @@ public class EvalTests
 {
     private static readonly string CasesDirectory = Path.Combine(AppContext.BaseDirectory, "evals", "cases");
 
-    public static TheoryData<string> CaseNames() => [.. Directory.EnumerateDirectories(CasesDirectory).Select(Path.GetFileName).Order()!];
+    public static TheoryData<string> CaseNames() => [.. Directory.EnumerateDirectories(CasesDirectory).Select(d => Path.GetFileName(d)).Order()];
 
     [Fact]
     public void The_dataset_has_cases()
