@@ -1,0 +1,23 @@
+{
+  "description": "The address is now read before the pickup check, and pickup orders have no address.",
+  "jobs": {
+    "test": {
+      "category": "TestFailure",
+      "relatedToPullRequest": true,
+      "rootCause": [
+        {
+          "file": "src/Shop.Core/ShippingService.cs",
+          "line": 12,
+          "tolerance": 3
+        }
+      ],
+      "keywords": [
+        "Address",
+        "pickup",
+        "retirada",
+        "自提",
+        "null"
+      ]
+    }
+  }
+}

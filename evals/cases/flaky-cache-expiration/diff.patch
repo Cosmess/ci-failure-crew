@@ -1,0 +1,9 @@
+diff --git a/README.md b/README.md
+--- a/README.md
++++ b/README.md
+@@ -3,3 +3,5 @@
+ An online shop built with ASP.NET Core.
+ 
+ Run it with `dotnet run --project src/Shop.Api`.
++
++See `docs/deploy.md` to deploy it to Azure.

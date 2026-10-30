@@ -480,3 +480,7 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# Job logs are test data in this repository: samples and evaluation cases.
+!samples/**/*.log
+!evals/cases/**/*.log

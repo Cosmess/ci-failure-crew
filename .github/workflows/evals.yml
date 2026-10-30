@@ -1,0 +1,43 @@
+name: Evaluation
+
+# Calls the real model for every labeled case, so it only runs on demand.
+on:
+  workflow_dispatch:
+    inputs:
+      model:
+        description: OpenAI model
+        default: gpt-5-mini
+      filter:
+        description: Only run the cases whose name contains this text (empty = all)
+        default: ""
+      language:
+        description: Language of the explanations (en, pt-BR or zh-CN)
+        default: en
+
+permissions:
+  contents: read
+
+jobs:
+  evals:
+    runs-on: ubuntu-latest
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      CFC_MODEL: ${{ inputs.model }}
+      EVAL_FILTER: ${{ inputs.filter }}
+      EVAL_LANGUAGE: ${{ inputs.language }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - name: Run the evaluation
+        run: |
+          args=(--output evaluation-report.md --language "$EVAL_LANGUAGE")
+          if [ -n "$EVAL_FILTER" ]; then args+=(--filter "$EVAL_FILTER"); fi
+          dotnet run --project src/CiFailureCrew.Evals -c Release -- "${args[@]}"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evaluation-report
+          path: evaluation-report.md
+          if-no-files-found: ignore

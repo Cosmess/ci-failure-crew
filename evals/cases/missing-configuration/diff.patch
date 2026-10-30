@@ -1,0 +1,12 @@
+diff --git a/src/Shop.Api/Program.cs b/src/Shop.Api/Program.cs
+--- a/src/Shop.Api/Program.cs
++++ b/src/Shop.Api/Program.cs
+@@ -17,6 +17,8 @@ builder.Services.AddControllers();
+ builder.Services.AddShopCore(builder.Configuration);
+ 
+ var app = builder.Build();
++var payments = app.Configuration.GetSection("Payments").Get<PaymentsOptions>() ?? new PaymentsOptions();
++payments.Validate();
+ 
+ app.MapControllers();
+ app.Run();

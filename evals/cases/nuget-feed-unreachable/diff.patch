@@ -1,0 +1,8 @@
+diff --git a/src/Shop.Api/Program.cs b/src/Shop.Api/Program.cs
+--- a/src/Shop.Api/Program.cs
++++ b/src/Shop.Api/Program.cs
+@@ -12,3 +12,4 @@ app.MapHealthChecks("/health");
+ app.MapControllers();
+ 
++app.MapGet("/version", () => "1.4.0");
+ app.Run();

@@ -1,0 +1,26 @@
+{
+  "description": "A new loyalty discount is multiplied on top of a policy that already includes it.",
+  "jobs": {
+    "test": {
+      "category": "TestFailure",
+      "relatedToPullRequest": true,
+      "rootCause": [
+        {
+          "file": "src/Shop.Core/Checkout.cs",
+          "line": 18,
+          "tolerance": 2
+        }
+      ],
+      "keywords": [
+        "loyalty",
+        "fidelidade",
+        "忠诚",
+        "twice",
+        "duas vezes",
+        "两次",
+        "0.81",
+        "81"
+      ]
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "description": "Docker Hub rate limited the image pull: a known failure explained without a model.",
+  "jobs": {
+    "integration": {
+      "category": "Infrastructure",
+      "relatedToPullRequest": false,
+      "knownRule": "rate-limited"
+    }
+  }
+}

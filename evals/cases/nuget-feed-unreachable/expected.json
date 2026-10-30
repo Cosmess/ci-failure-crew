@@ -1,0 +1,10 @@
+{
+  "description": "nuget.org was unreachable during restore: a known failure explained without a model.",
+  "jobs": {
+    "build": {
+      "category": "Dependency",
+      "relatedToPullRequest": false,
+      "knownRule": "package-feed-unreachable"
+    }
+  }
+}

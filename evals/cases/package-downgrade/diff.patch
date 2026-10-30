@@ -1,0 +1,10 @@
+diff --git a/src/Shop.Api/Shop.Api.csproj b/src/Shop.Api/Shop.Api.csproj
+--- a/src/Shop.Api/Shop.Api.csproj
++++ b/src/Shop.Api/Shop.Api.csproj
+@@ -8,5 +8,6 @@
+   <ItemGroup>
+     <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.6" />
++    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.4" />
+   </ItemGroup>
+ 
+   <ItemGroup>

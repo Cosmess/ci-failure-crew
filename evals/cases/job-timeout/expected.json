@@ -1,0 +1,10 @@
+{
+  "description": "The end-to-end job hit timeout-minutes: a known failure explained without a model.",
+  "jobs": {
+    "e2e": {
+      "category": "Timeout",
+      "relatedToPullRequest": false,
+      "knownRule": "job-timeout"
+    }
+  }
+}
