@@ -52,8 +52,9 @@ public sealed class CrewConfig
 
     public CrewLanguage ResolveLanguage() => CrewLanguage.Parse(Language);
 
+    // Patterns are compiled once instead of on every call.
     public bool IsIgnored(string jobName) =>
-        IgnoreJobs.Any(pattern => Regex.IsMatch(jobName, "^" + Regex.Escape(pattern).Replace(@"\*", ".*") + "$", RegexOptions.IgnoreCase));
+        IgnoreJobs.Any(pattern => Regex.IsMatch(jobName, "^" + Regex.Escape(pattern).Replace(@"\*", ".*") + "$", RegexOptions.Compiled));
 
     private void Validate()
     {
