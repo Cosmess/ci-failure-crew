@@ -1,0 +1,23 @@
+2026-10-30T14:00:00.0000000Z ##[group]Runner Image
+2026-10-30T14:00:01.0007919Z Image: ubuntu-24.04
+2026-10-30T14:00:02.0015838Z Version: 20261026.1
+2026-10-30T14:00:03.0023757Z ##[endgroup]
+2026-10-30T14:00:04.0031676Z ##[group]Run actions/checkout@v4
+2026-10-30T14:00:05.0039595Z Syncing repository: acme/shop
+2026-10-30T14:00:06.0047514Z Getting Git version info
+2026-10-30T14:00:07.0055433Z Temporarily overriding HOME='/home/runner/work/_temp/7f1c' before making global git config changes
+2026-10-30T14:00:08.0063352Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/shop/shop
+2026-10-30T14:00:09.0071271Z ##[endgroup]
+2026-10-30T14:00:10.0079190Z ##[group]Run actions/setup-dotnet@v4
+2026-10-30T14:00:11.0087109Z dotnet-install: .NET Core SDK with version '10.0.403' is already installed.
+2026-10-30T14:00:12.0095028Z ##[endgroup]
+2026-10-30T14:00:13.0102947Z ##[group]Run dotnet format --verify-no-changes --verbosity diagnostic
+2026-10-30T14:00:14.0110866Z   The dotnet runtime version is '10.0.14'.
+2026-10-30T14:00:15.0118785Z   Formatting code files in workspace '/home/runner/work/shop/shop/Shop.slnx'.
+2026-10-30T14:00:16.0126704Z /home/runner/work/shop/shop/src/Shop.Core/Inventory.cs(23,1): error WHITESPACE: Fix whitespace formatting. Replace 12 characters with '\n\s\s\s\s\s\s\s\s'. [/home/runner/work/shop/shop/src/Shop.Core/Shop.Core.csproj]
+2026-10-30T14:00:17.0134623Z /home/runner/work/shop/shop/src/Shop.Core/Inventory.cs(24,9): error IDE0055: Fix formatting [/home/runner/work/shop/shop/src/Shop.Core/Shop.Core.csproj]
+2026-10-30T14:00:18.0142542Z   Formatted 1 of 48 files.
+2026-10-30T14:00:19.0150461Z ##[error]Process completed with exit code 1.
+2026-10-30T14:00:20.0158380Z Post job cleanup.
+2026-10-30T14:00:21.0166299Z [command]/usr/bin/git version
+2026-10-30T14:00:22.0174218Z Cleaning up orphan processes

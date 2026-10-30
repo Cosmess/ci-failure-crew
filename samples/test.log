@@ -1,0 +1,52 @@
+2026-10-30T14:02:00.0000000Z ##[group]Runner Image
+2026-10-30T14:02:00.0000001Z Image: ubuntu-24.04
+2026-10-30T14:02:00.0000002Z Version: 20261026.1
+2026-10-30T14:02:00.0000003Z ##[endgroup]
+2026-10-30T14:02:00.0000004Z ##[group]Run actions/checkout@v4
+2026-10-30T14:02:00.0000005Z Syncing repository: acme/shop
+2026-10-30T14:02:00.0000006Z ##[endgroup]
+2026-10-30T14:02:00.0000007Z ##[group]Run actions/setup-dotnet@v4
+2026-10-30T14:02:00.0000008Z dotnet-install: .NET Core SDK with version '10.0.403' is already installed.
+2026-10-30T14:02:00.0000009Z ##[endgroup]
+2026-10-30T14:02:01.0000010Z ##[group]Run dotnet build -c Release
+2026-10-30T14:02:01.0000011Z   Determining projects to restore...
+2026-10-30T14:02:01.0000012Z   All projects are up-to-date for restore.
+2026-10-30T14:02:01.0000013Z   Shop.Core -> /home/runner/work/shop/shop/src/Shop.Core/bin/Release/net10.0/Shop.Core.dll
+2026-10-30T14:02:01.0000014Z   Shop.Api -> /home/runner/work/shop/shop/src/Shop.Api/bin/Release/net10.0/Shop.Api.dll
+2026-10-30T14:02:01.0000015Z   Shop.Tests -> /home/runner/work/shop/shop/tests/Shop.Tests/bin/Release/net10.0/Shop.Tests.dll
+2026-10-30T14:02:01.0000016Z 
+2026-10-30T14:02:01.0000017Z Build succeeded.
+2026-10-30T14:02:01.0000018Z     0 Warning(s)
+2026-10-30T14:02:01.0000019Z     0 Error(s)
+2026-10-30T14:02:02.0000020Z 
+2026-10-30T14:02:02.0000021Z Time Elapsed 00:00:14.27
+2026-10-30T14:02:02.0000022Z ##[endgroup]
+2026-10-30T14:02:02.0000023Z ##[group]Run dotnet test -c Release --no-build
+2026-10-30T14:02:02.0000024Z Test run for /home/runner/work/shop/shop/tests/Shop.Tests/bin/Release/net10.0/Shop.Tests.dll (.NETCoreApp,Version=v10.0)
+2026-10-30T14:02:02.0000025Z VSTest version 17.14.1 (x64)
+2026-10-30T14:02:02.0000026Z 
+2026-10-30T14:02:02.0000027Z Starting test execution, please wait...
+2026-10-30T14:02:02.0000028Z A total of 1 test files matched the specified pattern.
+2026-10-30T14:02:02.0000029Z [xUnit.net 00:00:00.52]     Shop.Tests.CheckoutTests.Gold_customer_pays_ninety_percent [FAIL]
+2026-10-30T14:02:03.0000030Z [xUnit.net 00:00:00.53]     Shop.Tests.CheckoutTests.Gold_customer_with_coupon_pays_eighty_percent [FAIL]
+2026-10-30T14:02:03.0000031Z   Failed Shop.Tests.CheckoutTests.Gold_customer_pays_ninety_percent [18 ms]
+2026-10-30T14:02:03.0000032Z   Error Message:
+2026-10-30T14:02:03.0000033Z    Assert.Equal() Failure: Values differ
+2026-10-30T14:02:03.0000034Z Expected: 90.00
+2026-10-30T14:02:03.0000035Z Actual:   81.00
+2026-10-30T14:02:03.0000036Z   Stack Trace:
+2026-10-30T14:02:03.0000037Z      at Shop.Tests.CheckoutTests.Gold_customer_pays_ninety_percent() in /home/runner/work/shop/shop/tests/Shop.Tests/CheckoutTests.cs:line 21
+2026-10-30T14:02:03.0000038Z    at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-10-30T14:02:03.0000039Z   Failed Shop.Tests.CheckoutTests.Gold_customer_with_coupon_pays_eighty_percent [1 ms]
+2026-10-30T14:02:04.0000040Z   Error Message:
+2026-10-30T14:02:04.0000041Z    Assert.Equal() Failure: Values differ
+2026-10-30T14:02:04.0000042Z Expected: 80.00
+2026-10-30T14:02:04.0000043Z Actual:   72.00
+2026-10-30T14:02:04.0000044Z   Stack Trace:
+2026-10-30T14:02:04.0000045Z      at Shop.Tests.CheckoutTests.Gold_customer_with_coupon_pays_eighty_percent() in /home/runner/work/shop/shop/tests/Shop.Tests/CheckoutTests.cs:line 33
+2026-10-30T14:02:04.0000046Z    at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-10-30T14:02:04.0000047Z 
+2026-10-30T14:02:04.0000048Z Failed!  - Failed:     2, Passed:    58, Skipped:     0, Total:    60, Duration: 402 ms - Shop.Tests.dll (net10.0)
+2026-10-30T14:02:04.0000049Z ##[error]Process completed with exit code 1.
+2026-10-30T14:02:05.0000050Z Post job cleanup.
+2026-10-30T14:02:05.0000051Z Cleaning up orphan processes
