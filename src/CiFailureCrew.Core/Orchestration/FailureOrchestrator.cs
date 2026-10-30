@@ -288,7 +288,9 @@ public sealed class FailureOrchestrator
     }
 
     private static string DiffSection(string? diff) =>
-        diff is null ? "No pull request diff is available." : $"Pull request diff:\n{MarkdownText.Fence(diff, "diff")}";
+        diff is null
+            ? "No pull request diff is available."
+            : $"Pull request diff. Each added or unchanged line starts with its line number in the new version of the file; cite those numbers:\n{MarkdownText.Fence(DiffAnnotator.WithLineNumbers(diff), "diff")}";
 
     private static string Truncate(string text, int maxChars) =>
         text.Length <= maxChars ? text : text[..maxChars] + "\n[diff truncated: it is larger than maxDiffChars]";
