@@ -11,6 +11,8 @@ connection, a package feed that is down. They are explained by rules in
 - The log has a fixed message that identifies the cause (`No space left on device`, `error NU1301`).
 - The cause is outside the code, so the fix is the same every time.
 - The message does not appear in failures caused by the code. A rule that matches a real code failure hides it.
+  As a safety net, no rule applies when the step shows a failed test or a compiler error
+  (`LogExcerpt.IsCodeFailure`), but match the full message, with its punctuation, rather than a fragment.
 
 If the cause depends on the code, let the agents handle it.
 

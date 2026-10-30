@@ -42,7 +42,9 @@ A job log can have tens of thousands of lines. Before any agent sees it:
 - **`SecretRedactor`** hides what GitHub did not mask: token formats, private keys, `Bearer` headers and
   `password=`-style assignments. It also runs on the diff.
 - **`KnownFailures`** recognizes failures whose cause is never the code (job timeout, runner lost, disk full, out
-  of memory, package feed down, rate limits) and explains them in every language without calling a model.
+  of memory, package feed down, rate limits) and explains them in every language without calling a model. Rules
+  never apply when the step shows a failed test or a compiler error: test output can contain these messages, and the
+  runner even turns a `##[error]` printed by a test into a line of its own. Lines of tests that passed are ignored.
 
 Note: the folder is `LogAnalysis` because the standard .NET `.gitignore` ignores folders named `Logs`.
 

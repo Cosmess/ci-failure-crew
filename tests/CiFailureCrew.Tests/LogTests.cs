@@ -128,6 +128,38 @@ public class LogTests
         Assert.Null(KnownFailures.Match(SampleLogs.CompilationError()));
     }
 
+    // Found on a real run: the tests of the rules print their messages in the names of tests that passed.
+    [Fact]
+    public void Messages_in_the_names_of_passed_tests_are_neither_known_failures_nor_errors()
+    {
+        var log = SampleLogs.WithTimestamps(
+            "##[group]Run dotnet test",
+            "  Passed Tests.LogTests.Recognizes(line: \"##[error]The runner has received a shutdown signal.\") [1 ms]",
+            "  Passed Tests.LogTests.Recognizes(line: \"error NU1301: Unable to load the service index\") [1 ms]",
+            "[xUnit.net 00:00:00.80]     Tests.ConfigTests.Ignores_jobs [FAIL]",
+            "  Failed Tests.ConfigTests.Ignores_jobs [4 ms]",
+            "  Error Message:",
+            "   Assert.True() Failure",
+            "##[error]Process completed with exit code 1.");
+
+        Assert.Null(KnownFailures.Match(log));
+
+        // The runner splits a "##[error]" printed by a test into a line of its own, as seen in a real job log:
+        // with a failed test in the step, the code failed and no rule applies.
+        var split = SampleLogs.WithTimestamps(
+            "##[group]Run dotnet test",
+            "  Passed Tests.LogTests.Recognizes(line: \"x\") [1 ms]",
+            "##[error]Process completed with exit code 137.\", id: \"out-of-memory\", category: Infrastructure) [< 1 ms]",
+            "  Failed Tests.ConfigTests.Ignores_jobs [4 ms]",
+            "##[error]Process completed with exit code 1.");
+        Assert.Null(KnownFailures.Match(split));
+        Assert.Equal("out-of-memory", KnownFailures.Match("##[error]Process completed with exit code 137.")?.Id);
+        Assert.False(LogExcerpt.IsInteresting("  Passed Tests.LogTests.Recognizes(line: \"error CS1061: x\") [1 ms]"));
+        Assert.True(LogExcerpt.IsInteresting("  Failed Tests.ConfigTests.Ignores_jobs [4 ms]"));
+        Assert.True(LogExcerpt.IsPassedTest("✓ formats prices (3 ms)"));
+        Assert.True(LogExcerpt.IsPassedTest("--- PASS: TestParse (0.00s)"));
+    }
+
     [Fact]
     public void Every_known_failure_is_written_in_every_language()
     {

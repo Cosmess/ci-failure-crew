@@ -8,7 +8,8 @@ All notable changes to this project are documented here. The format follows
 ### Added
 
 - Log analysis without a model: failed step isolation, log excerpts within a size limit, secret redaction and
-  known failure rules (job timeout, runner lost, disk full, out of memory, package feed down, rate limits).
+  known failure rules (job timeout, runner lost, disk full, out of memory, package feed down, rate limits), which
+  never apply when the log shows a failed test or a compiler error.
 - TriageAgent, FlakinessAgent, InvestigatorAgent, FixerAgent and SynthesizerAgent, called per job only when needed.
 - One comment per workflow on the pull request, updated on every run and resolved when the workflow passes, with
   GitHub suggestions for one-line fixes.

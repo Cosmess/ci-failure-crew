@@ -11,7 +11,9 @@ que quebrou o build e comenta no pull request: *"O teste X falhou porque a mudan
 como sugestão que você aplica com um clique. Construído com .NET 10 e o
 [Microsoft Agent Framework](https://github.com/microsoft/agent-framework).
 
-<!-- demo -->
+![CI Failure Crew explicando um teste que falhou num pull request](docs/images/demo-pr.png)
+
+<sub>Explicação real no [pull request de demonstração](https://github.com/Cosmess/ci-failure-crew/pull/10): a causa, a linha e a correção com um clique.</sub>
 
 ## Como funciona
 
