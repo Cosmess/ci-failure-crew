@@ -43,6 +43,9 @@ Um log de job pode ter dezenas de milhares de linhas. Antes de qualquer agente v
   atribuições como `password=`. Também roda sobre o diff.
 - **`KnownFailures`** reconhece falhas cuja causa nunca é o código (timeout do job, runner perdido, disco cheio,
   falta de memória, feed de pacotes fora do ar, limite de taxa) e as explica em todos os idiomas sem chamar o modelo.
+  As regras nunca se aplicam quando o passo mostra um teste reprovado ou um erro de compilação: a saída dos testes pode
+  conter essas mensagens, e o runner chega a transformar um `##[error]` impresso por um teste numa linha própria.
+  Linhas de testes aprovados são ignoradas.
 
 Observação: a pasta se chama `LogAnalysis` porque o `.gitignore` padrão do .NET ignora pastas chamadas `Logs`.
 

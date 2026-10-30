@@ -10,7 +10,9 @@
 中发表评论：*“测试 X 失败，是因为第 Y 行的修改导致了 Z”*，同时附上可一键提交的修复建议。基于 .NET 10 和
 [Microsoft Agent Framework](https://github.com/microsoft/agent-framework) 构建。
 
-<!-- demo -->
+![CI Failure Crew 在 Pull Request 中解释失败的测试](docs/images/demo-pr.png)
+
+<sub>[演示 Pull Request](https://github.com/Cosmess/ci-failure-crew/pull/10) 上的真实解释：原因、对应的代码行以及一键修复。</sub>
 
 ## 工作原理
 

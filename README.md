@@ -11,7 +11,9 @@ the build, and comments on the pull request: *"The test X failed because the cha
 as a suggestion you can commit in one click. Built with .NET 10 and the
 [Microsoft Agent Framework](https://github.com/microsoft/agent-framework).
 
-<!-- demo -->
+![CI Failure Crew explaining a failed test on a pull request](docs/images/demo-pr.png)
+
+<sub>Real explanation on the [demo pull request](https://github.com/Cosmess/ci-failure-crew/pull/10): the cause, the line and a one-click fix.</sub>
 
 ## How it works
 

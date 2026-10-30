@@ -52,7 +52,16 @@ public static partial class LogExcerpt
         return $"{head}\n{Gap}\n{tail}";
     }
 
-    public static bool IsInteresting(string line) => ErrorPattern().IsMatch(line);
+    public static bool IsInteresting(string line) => !IsPassedTest(line) && ErrorPattern().IsMatch(line);
+
+    /// <summary>
+    /// A line reporting a test that passed. Test names and arguments often contain error messages (tests of error
+    /// handling), so these lines must never count as errors.
+    /// </summary>
+    public static bool IsPassedTest(string line) => PassedTest().IsMatch(line);
+
+    /// <summary>A failed test or a compiler/analyzer error: evidence that the code, not the infrastructure, failed.</summary>
+    public static bool IsCodeFailure(string line) => !IsPassedTest(line) && CodeFailure().IsMatch(line);
 
     private static List<(int Start, int End)> Merge(List<(int Start, int End)> ranges)
     {
@@ -90,6 +99,14 @@ public static partial class LogExcerpt
 
         return text.ToString().TrimEnd();
     }
+
+    // dotnet test (normal verbosity), xUnit, Jest/Vitest, pytest and Go.
+    [GeneratedRegex(@"^\s*(Passed\s|✓|√|PASS\s)|\[PASS\]|\bPASSED\b|^\s*--- PASS:|^ok\s")]
+    private static partial Regex PassedTest();
+
+    // dotnet test, xUnit, Jest, pytest and Go failed tests, and C#/MSBuild/analyzer/TypeScript errors.
+    [GeneratedRegex(@"^\s*Failed [\w.`<>,\[\]]+ \[|\[FAIL\]|^\s*FAIL\s|^\s*--- FAIL:|^FAILED |\berror (CS|MSB|IDE|CA|TS)\d+\s*:|\berror [A-Z]+\s*:")]
+    private static partial Regex CodeFailure();
 
     // MSBuild/NuGet/C# diagnostics, dotnet test, xUnit/NUnit/MSTest, exceptions, Node, Python, Go, GitHub annotations.
     [GeneratedRegex(

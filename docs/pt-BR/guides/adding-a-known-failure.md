@@ -11,6 +11,8 @@ conexão, um feed de pacotes fora do ar. Elas são explicadas por regras em
 - O log tem uma mensagem fixa que identifica a causa (`No space left on device`, `error NU1301`).
 - A causa está fora do código, então a correção é sempre a mesma.
 - A mensagem não aparece em falhas causadas pelo código. Uma regra que reconhece uma falha real do código a esconde.
+  Como proteção, nenhuma regra se aplica quando o passo mostra um teste reprovado ou um erro de compilação
+  (`LogExcerpt.IsCodeFailure`), mas reconheça a mensagem completa, com a pontuação, e não um pedaço dela.
 
 Se a causa depende do código, deixe os agentes cuidarem dela.
 

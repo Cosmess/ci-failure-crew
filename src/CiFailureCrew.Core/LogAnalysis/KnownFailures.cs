@@ -31,7 +31,9 @@ public static class KnownFailures
                  "检查是否有卡住的步骤（例如无限等待的测试或交互式提示），如果任务确实耗时较长，请增大 timeout-minutes。"))),
 
         new("runner-lost", FailureCategory.Infrastructure,
-            new Regex(@"The runner has received a shutdown signal|lost communication with the server|The hosted runner encountered an error", RegexOptions.IgnoreCase),
+            // The full messages, with punctuation: test output can print fragments of them, and the runner turns any
+            // "##[error]" printed by a test into a line of its own.
+            new Regex(@"The runner has received a shutdown signal\.|lost communication with the server\.|The hosted runner encountered an error while running your job", RegexOptions.IgnoreCase),
             Texts(
                 ("The runner stopped or lost connection to GitHub while the job was running. This is an infrastructure problem, not the code.",
                  "Re-run the failed jobs. If it keeps happening, check whether the job uses too much memory or CPU for the runner."),
@@ -81,8 +83,16 @@ public static class KnownFailures
                  "稍后重新运行，为请求添加身份验证（例如使用 GITHUB_TOKEN 或登录 Docker Hub），或缓存需要下载的内容。")))
     ];
 
-    /// <summary>The first known failure found in the log, or null.</summary>
-    public static KnownFailure? Match(string log) => All.FirstOrDefault(rule => rule.Pattern.IsMatch(log));
+    /// <summary>
+    /// The first known failure found in the log, or null. When the log shows a failed test or a compiler error, the
+    /// code failed and no rule applies: test output can contain these messages, and the runner even turns a
+    /// "##[error]" printed by a test into a line of its own. Lines of tests that passed are ignored too.
+    /// </summary>
+    public static KnownFailure? Match(string log)
+    {
+        var lines = LogCleaner.Clean(log).Where(line => !LogExcerpt.IsPassedTest(line)).ToList();
+        return lines.Any(LogExcerpt.IsCodeFailure) ? null : All.FirstOrDefault(rule => lines.Any(rule.Pattern.IsMatch));
+    }
 
     private static Dictionary<string, KnownFailureText> Texts(
         (string Explanation, string Fix) english, (string Explanation, string Fix) portuguese, (string Explanation, string Fix) chinese) => new()
