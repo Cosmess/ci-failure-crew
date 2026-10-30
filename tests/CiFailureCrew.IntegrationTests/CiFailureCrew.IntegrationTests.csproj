@@ -21,4 +21,8 @@
     <ProjectReference Include="..\..\src\CiFailureCrew.Core\CiFailureCrew.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="..\..\samples\**" LinkBase="samples" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
 </Project>

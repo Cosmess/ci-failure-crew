@@ -1,0 +1,38 @@
+name: CI Failure Crew
+
+# Explains failed CI runs of pull requests in this repository, using the Action from the default branch.
+# workflow_run runs with the default branch's code and secrets, so it never checks out the pull request code.
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+
+permissions:
+  actions: read
+  contents: read
+  pull-requests: write
+
+jobs:
+  explain:
+    if: github.event.workflow_run.event == 'pull_request' && contains(fromJSON('["failure", "timed_out", "success"]'), github.event.workflow_run.conclusion)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check the OpenAI key
+        id: key
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          if [ -n "$OPENAI_API_KEY" ]; then
+            echo "available=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::The OPENAI_API_KEY secret is not set: explanation skipped."
+            echo "available=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Explain the failure
+        if: steps.key.outputs.available == 'true'
+        uses: ./
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
