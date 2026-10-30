@@ -5,6 +5,10 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-10-30
+
+First public release.
+
 ### Added
 
 - Log analysis without a model: failed step isolation, log excerpts within a size limit, secret redaction and
@@ -19,4 +23,5 @@ All notable changes to this project are documented here. The format follows
 - Explanations in English, Brazilian Portuguese and Simplified Chinese.
 - Evaluation suite with 11 labeled failed runs.
 
-[Unreleased]: https://github.com/Cosmess/ci-failure-crew/commits/main
+[Unreleased]: https://github.com/Cosmess/ci-failure-crew/compare/v1.0.0...main
+[1.0.0]: https://github.com/Cosmess/ci-failure-crew/releases/tag/v1.0.0
