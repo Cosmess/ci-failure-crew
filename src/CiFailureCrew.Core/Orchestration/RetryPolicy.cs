@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace CiFailureCrew.Core.Orchestration;
 
 /// <summary>Runs an operation with a per-attempt timeout and exponential backoff between retries.</summary>
@@ -22,7 +24,7 @@ public sealed class RetryPolicy(int maxRetries, TimeSpan timeout, Func<int, Time
             catch (Exception ex) when (!cancellationToken.IsCancellationRequested)
             {
                 var error = ex is OperationCanceledException
-                    ? new TimeoutException($"Timed out after {timeout.TotalSeconds:0}s.", ex)
+                    ? new TimeoutException($"Timed out after {timeout.TotalSeconds.ToString("0.##", CultureInfo.InvariantCulture)}s.", ex)
                     : ex;
 
                 if (attempt > maxRetries)

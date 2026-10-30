@@ -24,7 +24,8 @@ public class RetryPolicyTests
             (_, ex) => retryError = ex);
 
         Assert.Equal("ok", result);
-        Assert.IsType<TimeoutException>(retryError);
+        var timeout = Assert.IsType<TimeoutException>(retryError);
+        Assert.Equal("Timed out after 0.05s.", timeout.Message);
     }
 
     [Fact]
