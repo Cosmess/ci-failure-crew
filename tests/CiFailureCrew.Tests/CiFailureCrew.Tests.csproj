@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <None Include="..\..\samples\**" LinkBase="samples" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\..\.ci-failure-crew.example.yml" Link=".ci-failure-crew.example.yml" CopyToOutputDirectory="PreserveNewest" />
     <None Include="..\..\evals\cases\**" LinkBase="evals\cases" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 

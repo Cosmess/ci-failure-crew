@@ -1,0 +1,44 @@
+name: Bug report
+description: Something does not work as documented.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. For security issues, use [private vulnerability reporting](https://github.com/Cosmess/ci-failure-crew/security/advisories/new) instead.
+        Never paste API keys or tokens here.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What you expected and what happened instead.
+    validations:
+      required: true
+  - type: dropdown
+    id: usage
+    attributes:
+      label: How do you run CI Failure Crew?
+      options:
+        - GitHub Action
+        - Command line
+        - Evaluation runner
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: The Action ref (for example `@v1`) or the commit you run.
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Runner or operating system, provider and model (for example `ubuntu-latest`, OpenAI `gpt-5-mini`).
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs and configuration
+      description: The relevant job log and your `.crc.yml`, without secrets.
+      render: text

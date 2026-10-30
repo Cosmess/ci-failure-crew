@@ -130,4 +130,19 @@ public class RenderingTests
         Assert.Throws<InvalidOperationException>(() => CrewConfig.Parse("language: fr"));
         Assert.Equal(3, CrewConfig.Parse("").MaxJobs);
     }
+
+    [Fact]
+    public void The_example_configuration_is_valid_and_matches_the_defaults()
+    {
+        var example = CrewConfig.Load(Path.Combine(AppContext.BaseDirectory, ".ci-failure-crew.example.yml"));
+        var defaults = CrewConfig.Default;
+
+        Assert.Equal(defaults.Language, example.Language);
+        Assert.Equal(defaults.MaxJobs, example.MaxJobs);
+        Assert.Equal(defaults.HistoryRuns, example.HistoryRuns);
+        Assert.Equal(defaults.MaxLogChars, example.MaxLogChars);
+        Assert.Equal(defaults.MaxDiffChars, example.MaxDiffChars);
+        Assert.Equal(defaults.AgentTimeoutSeconds, example.AgentTimeoutSeconds);
+        Assert.Equal(defaults.MaxRetries, example.MaxRetries);
+    }
 }
