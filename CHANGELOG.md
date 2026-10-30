@@ -5,6 +5,11 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Fixed
+
+- The timeout message of an agent call showed "0s" for timeouts under one second; it now shows fractions of a
+  second.
+
 ## [1.0.0] - 2026-10-30
 
 First public release.
