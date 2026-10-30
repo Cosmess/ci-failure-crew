@@ -1,0 +1,31 @@
+# CI Failure Crew configuration. Copy it to .ci-failure-crew.yml at the root of the repository.
+# Every option is optional; the values below are the defaults.
+
+# Language of the explanation: en, pt-BR or zh-CN.
+# The Action's "language" input and the CLI's --language option override it.
+language: en
+
+# Maximum number of failed jobs analyzed per run. The other failed jobs are listed without analysis.
+maxJobs: 3
+
+# Job names that are never analyzed. * matches any text. Example: ["deploy*", "Publish docs"]
+ignoreJobs: []
+
+# Recent completed runs of the workflow on the default branch used to tell flaky jobs from real failures.
+# Each run costs one API request. 0 disables the check.
+historyRuns: 10
+
+# Maximum size, in characters, of the log excerpt sent to the agents for each job.
+maxLogChars: 20000
+
+# Maximum size, in characters, of the pull request diff sent to the agents.
+maxDiffChars: 40000
+
+# Timeout of each agent call, and how many times a failed call is retried.
+agentTimeoutSeconds: 180
+maxRetries: 2
+
+# Model prices in US$ per 1 million tokens, to show the estimated cost of each explanation.
+# pricing:
+#   inputPerMillion: 0.25
+#   outputPerMillion: 2.00
