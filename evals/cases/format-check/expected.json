@@ -1,0 +1,25 @@
+{
+  "description": "dotnet format rejects the indentation of a line added by the pull request.",
+  "jobs": {
+    "lint": {
+      "category": "Compilation",
+      "relatedToPullRequest": true,
+      "rootCause": [
+        {
+          "file": "src/Shop.Core/Inventory.cs",
+          "line": 23,
+          "tolerance": 1
+        }
+      ],
+      "keywords": [
+        "indent",
+        "format",
+        "whitespace",
+        "空白",
+        "缩进",
+        "espaço",
+        "recuo"
+      ]
+    }
+  }
+}

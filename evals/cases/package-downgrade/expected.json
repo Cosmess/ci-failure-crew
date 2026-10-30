@@ -1,0 +1,24 @@
+{
+  "description": "The pull request pins an older version of a package that another project needs newer.",
+  "jobs": {
+    "build": {
+      "category": "Dependency",
+      "acceptCategories": [
+        "Compilation"
+      ],
+      "relatedToPullRequest": true,
+      "rootCause": [
+        {
+          "file": "src/Shop.Api/Shop.Api.csproj",
+          "line": 10,
+          "tolerance": 1
+        }
+      ],
+      "keywords": [
+        "downgrade",
+        "9.0.4",
+        "10.0.14"
+      ]
+    }
+  }
+}

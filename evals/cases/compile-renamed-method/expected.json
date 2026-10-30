@@ -1,0 +1,25 @@
+{
+  "description": "A method renamed in the pull request is still called by a controller outside the diff.",
+  "jobs": {
+    "build": {
+      "category": "Compilation",
+      "relatedToPullRequest": true,
+      "rootCause": [
+        {
+          "file": "src/Shop.Core/OrderService.cs",
+          "line": 8,
+          "tolerance": 1
+        },
+        {
+          "file": "src/Shop.Api/OrdersController.cs",
+          "line": 27,
+          "tolerance": 1
+        }
+      ],
+      "keywords": [
+        "GetTotal",
+        "CalculateTotal"
+      ]
+    }
+  }
+}

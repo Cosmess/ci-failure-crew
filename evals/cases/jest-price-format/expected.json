@@ -1,0 +1,21 @@
+{
+  "description": "Wrapping toFixed in Number drops the trailing zero of prices.",
+  "jobs": {
+    "web": {
+      "category": "TestFailure",
+      "relatedToPullRequest": true,
+      "rootCause": [
+        {
+          "file": "src/format.js",
+          "line": 2,
+          "tolerance": 1
+        }
+      ],
+      "keywords": [
+        "Number",
+        "toFixed",
+        "zero"
+      ]
+    }
+  }
+}

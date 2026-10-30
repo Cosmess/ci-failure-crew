@@ -1,0 +1,13 @@
+diff --git a/src/Shop.Core/Inventory.cs b/src/Shop.Core/Inventory.cs
+--- a/src/Shop.Core/Inventory.cs
++++ b/src/Shop.Core/Inventory.cs
+@@ -19,6 +19,9 @@ public sealed class Inventory(IStockRepository stock)
+         return item.Quantity >= quantity;
+     }
+ 
++    public Task ReserveAsync(int productId, int quantity, CancellationToken cancellationToken) =>
++            stock.ReserveAsync(productId, quantity, cancellationToken);
++
+     public Task ReleaseAsync(int productId, int quantity, CancellationToken cancellationToken) =>
+         stock.ReleaseAsync(productId, quantity, cancellationToken);
+ }

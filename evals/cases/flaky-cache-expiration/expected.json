@@ -1,0 +1,19 @@
+{
+  "description": "A timing-dependent cache test fails on a README-only change and also fails on main.",
+  "jobs": {
+    "test": {
+      "category": "Flaky",
+      "relatedToPullRequest": false,
+      "keywords": [
+        "intermit",
+        "flaky",
+        "instáv",
+        "instav",
+        "不稳定",
+        "timing",
+        "tempo",
+        "时间"
+      ]
+    }
+  }
+}

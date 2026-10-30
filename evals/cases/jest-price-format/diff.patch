@@ -1,0 +1,10 @@
+diff --git a/src/format.js b/src/format.js
+--- a/src/format.js
++++ b/src/format.js
+@@ -1,5 +1,5 @@
+ export function formatPrice(value) {
+-  return `$${value.toFixed(2)}`;
++  return `$${Number(value.toFixed(2))}`;
+ }
+ 
+ export const currency = 'USD';

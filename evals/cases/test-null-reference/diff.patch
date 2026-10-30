@@ -1,0 +1,21 @@
+diff --git a/src/Shop.Core/ShippingService.cs b/src/Shop.Core/ShippingService.cs
+--- a/src/Shop.Core/ShippingService.cs
++++ b/src/Shop.Core/ShippingService.cs
+@@ -10,10 +10,11 @@ public sealed class ShippingService(IRateTable rates)
+     public decimal Cost(Order order)
+     {
+-        if (order.IsPickup)
+-        {
+-            return 0m;
+-        }
+-
+-        return rates.For(order.Address!.Region) * order.Weight;
++        var region = order.Address!.Region;
++        if (order.IsPickup)
++        {
++            return 0m;
++        }
++
++        return rates.For(region) * order.Weight;
+     }
+ }

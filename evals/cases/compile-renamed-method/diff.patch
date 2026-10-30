@@ -1,0 +1,11 @@
+diff --git a/src/Shop.Core/OrderService.cs b/src/Shop.Core/OrderService.cs
+--- a/src/Shop.Core/OrderService.cs
++++ b/src/Shop.Core/OrderService.cs
+@@ -6,6 +6,6 @@ namespace Shop.Core;
+ public sealed class OrderService(IOrderRepository orders)
+ {
+-    public decimal GetTotal(Order order) => order.Items.Sum(i => i.Price * i.Quantity);
++    public decimal CalculateTotal(Order order) => order.Items.Sum(i => i.Price * i.Quantity);
+ 
+     public Task<Order?> FindAsync(int id, CancellationToken cancellationToken) => orders.FindAsync(id, cancellationToken);
+ }

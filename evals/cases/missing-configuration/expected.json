@@ -1,0 +1,29 @@
+{
+  "description": "Startup now requires a payments URL that the test host does not configure.",
+  "jobs": {
+    "test": {
+      "category": "Configuration",
+      "acceptCategories": [
+        "TestFailure"
+      ],
+      "relatedToPullRequest": true,
+      "rootCause": [
+        {
+          "file": "src/Shop.Api/Program.cs",
+          "line": 21,
+          "tolerance": 1
+        },
+        {
+          "file": "src/Shop.Api/Payments/PaymentsOptions.cs",
+          "line": 14,
+          "tolerance": 1
+        }
+      ],
+      "keywords": [
+        "Payments:ApiUrl",
+        "ApiUrl",
+        "PAYMENTS__APIURL"
+      ]
+    }
+  }
+}

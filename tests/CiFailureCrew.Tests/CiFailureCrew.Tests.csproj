@@ -19,10 +19,12 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\CiFailureCrew.Core\CiFailureCrew.Core.csproj" />
     <ProjectReference Include="..\..\src\CiFailureCrew.McpServer\CiFailureCrew.McpServer.csproj" />
+    <ProjectReference Include="..\..\src\CiFailureCrew.Evals\CiFailureCrew.Evals.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="..\..\samples\**" LinkBase="samples" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\..\evals\cases\**" LinkBase="evals\cases" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>

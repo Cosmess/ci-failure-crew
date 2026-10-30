@@ -1,0 +1,6 @@
+{
+  "test": {
+    "runs": 10,
+    "failures": 3
+  }
+}
