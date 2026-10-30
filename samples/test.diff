@@ -1,0 +1,16 @@
+diff --git a/src/Shop.Core/Checkout.cs b/src/Shop.Core/Checkout.cs
+index 3f2a1c4..8b9d0e2 100644
+--- a/src/Shop.Core/Checkout.cs
++++ b/src/Shop.Core/Checkout.cs
+@@ -12,8 +12,9 @@ public sealed class Checkout(IDiscountPolicy discounts)
+     public decimal Total(Cart cart, Customer customer, string? coupon = null)
+     {
+         var subtotal = cart.Items.Sum(i => i.Price * i.Quantity);
+-        var discount = discounts.For(customer, coupon);
++        var discount = discounts.For(customer, coupon);
++        var loyalty = customer.IsGold ? 0.10m : 0m;
+ 
+-        return Math.Round(subtotal * (1 - discount), 2);
++        return Math.Round(subtotal * (1 - discount) * (1 - loyalty), 2);
+     }
+ }

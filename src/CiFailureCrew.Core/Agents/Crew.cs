@@ -42,8 +42,11 @@ public static class Crew
         - Timeout: the job or a step exceeded its time limit.
         - Configuration: a missing or wrong secret, environment variable, file or workflow setting.
         - Unknown: none of the above fits.
-        Return the category, a confidence between 0 and 1, a two-sentence summary of what failed, the failing tests
-        or errors exactly as written in the log (at most 10), and the next step the developer should take.
+        Return the category, a confidence between 0 and 1, a two-sentence summary of what failed, the failing items
+        (at most 10) and the next step the developer should take.
+        A failing item is only the fully qualified name of a failing test (e.g. "Shop.Tests.CheckoutTests.Gold_pays_90")
+        or an error code with its file (e.g. "CS1061 in src/Api/OrdersController.cs"): never whole log lines,
+        timestamps, durations, "Error Message:" headers or stack trace lines. List each test once.
         {SharedRules}
         """);
 
@@ -87,6 +90,11 @@ public static class Crew
         that line (it may span several lines, with the original indentation). Leave the code empty when the fix
         is larger, touches several places or you are not sure.
         Fix the code, not the test, unless the test is clearly wrong after an intended behavior change.
+        Before answering, check the fix against the evidence: when the log shows expected and actual values, work out
+        that the fixed code produces the expected ones for every failing test. Unless the job history says it was
+        already failing, assume the tests passed before the pull request: the lines the diff removed produced the
+        expected values, so use them to infer what the code must compute. Prefer undoing the part of the change that
+        broke the behavior over adding new logic.
         {SharedRules}
         """);
 

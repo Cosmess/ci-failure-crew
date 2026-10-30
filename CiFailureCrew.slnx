@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/src/">
+    <Project Path="src/CiFailureCrew.Cli/CiFailureCrew.Cli.csproj" />
     <Project Path="src/CiFailureCrew.Core/CiFailureCrew.Core.csproj" />
     <Project Path="src/CiFailureCrew.McpServer/CiFailureCrew.McpServer.csproj" />
     <Project Path="src/CiFailureCrew.Providers/CiFailureCrew.Providers.csproj" />
