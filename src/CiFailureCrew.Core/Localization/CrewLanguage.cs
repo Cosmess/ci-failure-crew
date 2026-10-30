@@ -59,6 +59,7 @@ public sealed record ReportStrings
     public required string TokenUsage { get; init; }
     public required string EstimatedCost { get; init; }
     public required string CommentTruncated { get; init; }
+    public required string SuggestionsReview { get; init; }
 
     public string Category(FailureCategory category) => Categories[category];
 
@@ -94,7 +95,8 @@ public sealed record ReportStrings
         PreviousDiagnosis = "Previous diagnosis",
         TokenUsage = "Tokens: {0} input / {1} output",
         EstimatedCost = "estimated cost: US$ {0}",
-        CommentTruncated = "[truncated by GitHub's comment size limit]"
+        CommentTruncated = "[truncated by GitHub's comment size limit]",
+        SuggestionsReview = "🩺 CI Failure Crew: suggested fixes for the failed workflow. The full explanation is in the comment below."
     };
 
     public static readonly ReportStrings PortugueseBrazil = new()
@@ -129,7 +131,8 @@ public sealed record ReportStrings
         PreviousDiagnosis = "Diagnóstico anterior",
         TokenUsage = "Tokens: {0} de entrada / {1} de saída",
         EstimatedCost = "custo estimado: US$ {0}",
-        CommentTruncated = "[truncado pelo limite de tamanho de comentários do GitHub]"
+        CommentTruncated = "[truncado pelo limite de tamanho de comentários do GitHub]",
+        SuggestionsReview = "🩺 CI Failure Crew: correções sugeridas para o workflow que falhou. A explicação completa está no comentário abaixo."
     };
 
     public static readonly ReportStrings ChineseSimplified = new()
@@ -164,6 +167,7 @@ public sealed record ReportStrings
         PreviousDiagnosis = "之前的诊断",
         TokenUsage = "Token：输入 {0} / 输出 {1}",
         EstimatedCost = "预估费用：US$ {0}",
-        CommentTruncated = "[内容因 GitHub 评论长度限制被截断]"
+        CommentTruncated = "[内容因 GitHub 评论长度限制被截断]",
+        SuggestionsReview = "🩺 CI Failure Crew：针对失败工作流的修复建议。完整说明见下方评论。"
     };
 }
