@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/CiFailureCrew.Core/CiFailureCrew.Core.csproj" />
+    <Project Path="src/CiFailureCrew.McpServer/CiFailureCrew.McpServer.csproj" />
+    <Project Path="src/CiFailureCrew.Providers/CiFailureCrew.Providers.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/CiFailureCrew.Tests/CiFailureCrew.Tests.csproj" />
+  </Folder>
+</Solution>
