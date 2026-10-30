@@ -1,0 +1,109 @@
+name: CI Failure Crew
+description: A crew of AI agents explains why your CI failed, finds the line that caused it and suggests the fix on the pull request.
+author: Cosme Sousa
+branding:
+  icon: activity
+  color: red
+
+inputs:
+  openai-api-key:
+    description: OpenAI API key.
+    required: true
+  github-token:
+    description: Token used to read the run and its logs (actions read) and to comment on the pull request (pull-requests write).
+    default: ${{ github.token }}
+  model:
+    description: OpenAI model.
+    default: gpt-5-mini
+  language:
+    description: Language of the explanation (en, pt-BR or zh-CN). Overrides the language in the configuration file.
+    default: ""
+  config:
+    description: Path of the CI Failure Crew configuration file.
+    default: .ci-failure-crew.yml
+  run-id:
+    description: Id of the workflow run to explain. Defaults to the run that triggered a workflow_run event.
+    default: ${{ github.event.workflow_run.id }}
+  post-comment:
+    description: Posts the explanation on the pull request (and marks it resolved when the workflow passes again).
+    default: "true"
+  read-repository:
+    description: Gives the agents MCP tools to read files of the checked-out repository (requires actions/checkout).
+    default: "true"
+
+runs:
+  using: composite
+  steps:
+    # Linux runners pull the prebuilt image published for this version; other runners, and versions without an
+    # image (a branch or a commit SHA), build the tool from source.
+    - name: Prepare CI Failure Crew
+      id: prepare
+      shell: bash
+      env:
+        RUN_ID: ${{ inputs.run-id }}
+        ACTION_REPOSITORY: ${{ github.action_repository }}
+        ACTION_REF: ${{ github.action_ref }}
+      run: |
+        if [ -z "$RUN_ID" ]; then
+          echo "::error::CI Failure Crew needs a workflow run: trigger it with workflow_run or set the run-id input."
+          exit 1
+        fi
+
+        mode=source
+        if [ "$RUNNER_OS" = "Linux" ] && [ -n "$ACTION_REPOSITORY" ] && [ -n "$ACTION_REF" ] && command -v docker > /dev/null; then
+          image="ghcr.io/${ACTION_REPOSITORY,,}:${ACTION_REF//\//-}"
+          if docker pull --quiet "$image" > /dev/null 2>&1; then
+            mode=container
+            echo "image=$image" >> "$GITHUB_OUTPUT"
+            echo "Using the prebuilt image $image."
+          else
+            echo "No prebuilt image for $ACTION_REF: building from source."
+          fi
+        fi
+        echo "mode=$mode" >> "$GITHUB_OUTPUT"
+
+    - if: steps.prepare.outputs.mode == 'source'
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 10.0.x
+
+    # Built inside the Action's folder so a global.json in the repository does not pick the SDK.
+    - name: Build CI Failure Crew
+      if: steps.prepare.outputs.mode == 'source'
+      shell: bash
+      working-directory: ${{ github.action_path }}
+      run: dotnet publish src/CiFailureCrew.Cli -c Release -o "$RUNNER_TEMP/ci-failure-crew" --nologo
+
+    - name: Explain the failure
+      shell: bash
+      # Inputs go through environment variables, never interpolated into the script, to avoid script injection.
+      env:
+        OPENAI_API_KEY: ${{ inputs.openai-api-key }}
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+        CFC_PROVIDER: openai
+        CFC_MODEL: ${{ inputs.model }}
+        CFC_RUN_ID: ${{ inputs.run-id }}
+        CFC_LANGUAGE: ${{ inputs.language }}
+        CFC_CONFIG: ${{ inputs.config }}
+        CFC_POST: ${{ inputs.post-comment }}
+        CFC_READ_REPOSITORY: ${{ inputs.read-repository }}
+        CFC_MODE: ${{ steps.prepare.outputs.mode }}
+        CFC_IMAGE: ${{ steps.prepare.outputs.image }}
+      run: |
+        args=(--run "$CFC_RUN_ID" --repo "$GITHUB_REPOSITORY")
+        if [ "$CFC_POST" = "true" ]; then args+=(--post); fi
+        if [ -f "$CFC_CONFIG" ]; then args+=(--config "$CFC_CONFIG"); fi
+        if [ -n "$CFC_LANGUAGE" ]; then args+=(--language "$CFC_LANGUAGE"); fi
+        if [ "$CFC_READ_REPOSITORY" = "true" ]; then args+=(--repo-path "$GITHUB_WORKSPACE"); fi
+
+        if [ "$CFC_MODE" = "container" ]; then
+          # The workspace and the runner's temp folder (which holds GITHUB_STEP_SUMMARY) keep their paths inside the
+          # container, so paths work the same way in both modes.
+          docker run --rm --user "$(id -u):$(id -g)" \
+            -v "$GITHUB_WORKSPACE:$GITHUB_WORKSPACE" -v "$RUNNER_TEMP:$RUNNER_TEMP" -w "$PWD" \
+            -e HOME=/tmp -e OPENAI_API_KEY -e GITHUB_TOKEN -e GITHUB_REPOSITORY -e GITHUB_API_URL \
+            -e GITHUB_STEP_SUMMARY -e CFC_PROVIDER -e CFC_MODEL \
+            "$CFC_IMAGE" "${args[@]}"
+        else
+          dotnet "$RUNNER_TEMP/ci-failure-crew/cfc.dll" "${args[@]}"
+        fi

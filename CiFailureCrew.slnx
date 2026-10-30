@@ -6,6 +6,7 @@
     <Project Path="src/CiFailureCrew.Providers/CiFailureCrew.Providers.csproj" />
   </Folder>
   <Folder Name="/tests/">
+    <Project Path="tests/CiFailureCrew.IntegrationTests/CiFailureCrew.IntegrationTests.csproj" />
     <Project Path="tests/CiFailureCrew.Tests/CiFailureCrew.Tests.csproj" />
   </Folder>
 </Solution>
